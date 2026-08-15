@@ -6,13 +6,29 @@ Instant, Local Developer Tool Inspector
 
 **100% Offline. Zero Sudo. Instant Lookups.**
 
+
+## 📦 Installation
+
+You can install `tellme` directly via Homebrew without manually tapping first:
+
+```bash
+brew install eaccmk/homebrew-tellme/tellme
+```
+
+> ![NOTE]
+> Note: Once our formula is accepted into Homebrew Core, this command will become:
+
+```bash
+brew install tellme
+```
+
 ```bash
 📦 swift (v5.9.2) - Apple Inc.
 --------------------------------------------------
-📌 What:  Statically typed programming language for Apple platforms.
-📍 Where: /usr/bin/swift
-🕒 When:  Pre-installed macOS system binary
-🛠️ How:   Try running: `swift build` or `swift test`
+ What  :  Statically typed programming language for Apple platforms.
+ Where : /usr/bin/swift
+ When  :  Pre-installed macOS system binary
+ How   :   Try running: `swift build` or `swift test`
 ```
 
 or
@@ -22,10 +38,10 @@ $ tellme "do I have python and java?"
 
 📦 Python (Python 3.14.7) - Python Software Foundation
 --------------------------------------------------
-📌 What:   Interpreted high-level programming language
-📍 Where:  /usr/local/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14
-🕒 When:   Installed/updated 2 hours ago (Aug 14, 2026)
-🛠️ How:    Try running: `python3 main.py` or `python -m venv venv`
+What    :  Interpreted high-level programming language
+Where   :  /usr/local/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14
+When    :  Installed/updated 2 hours ago (Aug 14, 2026)
+How     :  Try running: `python3 main.py` or `python -m venv venv`
 ```
 
 ---
