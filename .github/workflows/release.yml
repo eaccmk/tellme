@@ -34,5 +34,4 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # The custom token is required to push formulas to homebrew-tellme tap repo
-          # GITHUB_TOKEN has write permission for standard repository releases.
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
