@@ -7,6 +7,8 @@ Instant, Local Developer Tool Inspector
 **100% Offline. Zero Sudo. Instant Lookups.**
 
 
+![tellme icon](./assets/icon_tellme.png)
+
 ## 📦 Installation
 
 You can install `tellme` directly via Homebrew without manually tapping first:
@@ -22,16 +24,7 @@ brew install eaccmk/homebrew-tellme/tellme
 brew install tellme
 ```
 
-```bash
-📦 swift (v5.9.2) - Apple Inc.
---------------------------------------------------
- What  :  Statically typed programming language for Apple platforms.
- Where : /usr/bin/swift
- When  :  Pre-installed macOS system binary
- How   :   Try running: `swift build` or `swift test`
-```
-
-or
+![tellme brew package demo](./assets/tellme-demo%20copy.gif)
 
 ```bash
 $ tellme "do I have python and java?"
@@ -43,6 +36,8 @@ Where   :  /usr/local/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Vers
 When    :  Installed/updated 2 hours ago (Aug 14, 2026)
 How     :  Try running: `python3 main.py` or `python -m venv venv`
 ```
+
+> limted emoji support 🐍 (raise a PR to ad more 🙏)
 
 ---
 
