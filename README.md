@@ -1,5 +1,7 @@
 # tellme ⚡️
 
+<img src="./assets/tellme-demo%20copy.gif" alt="tellme brew package demo" style="border: 1px solid #ddd; border-radius: 8px;" />
+
 Instant, Local Developer Tool Inspector
 
 `tellme` is a lightning-fast, 100% offline developer tool inspector that answers questions about your development environment.
@@ -7,7 +9,7 @@ Instant, Local Developer Tool Inspector
 **100% Offline. Zero Sudo. Instant Lookups.**
 
 
-![tellme icon](./assets/icon_tellme.png)
+<img src="./assets/icon_tellme.png" width="100" alt="tellme icon" />
 
 ## 📦 Installation
 
@@ -23,8 +25,6 @@ brew install eaccmk/homebrew-tellme/tellme
 ```bash
 brew install tellme
 ```
-
-![tellme brew package demo](./assets/tellme-demo%20copy.gif)
 
 ```bash
 $ tellme "do I have python and java?"
