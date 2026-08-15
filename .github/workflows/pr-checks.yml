@@ -1,0 +1,31 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  pr-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+          cache: true
+
+      - name: Run Tests
+        # Runs all tests in verbose mode. If any test fails, the step exits with a non-zero exit code.
+        # This status check will be enforced by GitHub branch protection rules to block merging.
+        run: go test -v ./...
+
+      - name: Compile Binary
+        # Ensures the code compiles successfully without compilation errors.
+        run: go build -o tellme .

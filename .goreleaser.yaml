@@ -1,0 +1,36 @@
+version: 2
+project_name: tellme
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - format: tar.gz
+    # this name template makes the archives look nice
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+
+brews:
+  - repository:
+      owner: "{{ .Env.GITHUB_REPOSITORY_OWNER }}"
+      name: homebrew-tellme
+    directory: Formula
+    homepage: "https://github.com/{{ .Env.GITHUB_REPOSITORY }}"
+    description: "A blazing fast local CLI assistant to verify installed tools and versions."
+    install: |
+      bin.install "tellme"
+    caveats: |
+      To prevent shell wildcard/globbing errors (e.g. when typing question marks like 'tellme do I have python?'), add the following to your shell profile (~/.zshrc for Zsh):
+
+        eval "$(tellme init)"
