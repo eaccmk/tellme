@@ -220,23 +220,23 @@ func runDetectionQuery(rawQuery string) {
 
 			// Format lines (strip emojis if useEmojis is false)
 			pkgPrefix := "📦"
-			whatPrefix := "📌 What:   "
-			wherePrefix := "📍 Where:  "
-			whenPrefix := "🕒 When:   "
-			howPrefix := "🛠️ How:    "
+			whatPrefix := "What    :  "
+			wherePrefix := "Where   :  "
+			whenPrefix := "When    :  "
+			howPrefix := "How     :  "
 
 			if !useEmojis {
 				pkgPrefix = ""
-				whatPrefix = "What:   "
-				wherePrefix = "Where:  "
-				whenPrefix = "When:   "
-				howPrefix = "How:    "
+				whatPrefix = "What    :  "
+				wherePrefix = "Where   :  "
+				whenPrefix = "When    :  "
+				howPrefix = "How     :  "
 			}
 
 			sep := "--------------------------------------------------"
 
 			if useColors := useSpinner; useColors {
-				fmt.Printf("\033[1;34m%s %s (%s) - %s\033[0m\n", pkgPrefix, res.ProperName, inst.Version, author)
+				fmt.Printf("\n\033[1;34m%s %s (%s) - %s\033[0m\n", pkgPrefix, res.ProperName, inst.Version, author)
 				fmt.Println("\033[34m" + sep + "\033[0m")
 				fmt.Printf("\033[1;32m%s\033[0m%s\n", whatPrefix, desc)
 				fmt.Printf("\033[1;32m%s\033[0m%s\n", wherePrefix, inst.Path)
@@ -245,7 +245,7 @@ func runDetectionQuery(rawQuery string) {
 				}
 				fmt.Printf("\033[1;32m%s\033[0mTry running: %s\n\n", howPrefix, example)
 			} else {
-				fmt.Printf("%s %s (%s) - %s\n", pkgPrefix, res.ProperName, inst.Version, author)
+				fmt.Printf("\n%s %s (%s) - %s\n", pkgPrefix, res.ProperName, inst.Version, author)
 				fmt.Println(sep)
 				fmt.Printf("%s%s\n", whatPrefix, desc)
 				fmt.Printf("%s%s\n", wherePrefix, inst.Path)
