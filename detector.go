@@ -35,7 +35,12 @@ func DetectTools(toolName string) ([]Installation, error) {
 	lowerName := strings.ToLower(toolName)
 	config, ok := ToolRegistry[lowerName]
 	if !ok {
-		return nil, fmt.Errorf("unsupported tool: %s", toolName)
+		if fallbackConfig, found := detectUnregisteredBrewTool(lowerName); found {
+			ToolRegistry[lowerName] = fallbackConfig
+			config = fallbackConfig
+		} else {
+			return nil, fmt.Errorf("unsupported tool: %s", toolName)
+		}
 	}
 
 	// Try loading from cache first

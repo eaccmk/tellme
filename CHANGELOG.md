@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-08-24
+
+### Added
+- **Dynamic Homebrew Fallback Detector**: Checks standard Homebrew Cellar and Caskroom paths on macOS and Linux/Unix systems to dynamically inspect unregistered installed packages.
+- **New Tools**: Registered `tellme`, `brew`, and `claude` (cask) tools statically in the registry map.
+- **Emoji Aliases Expansion**: Re-mapped `🦀` to `claude`, added `🍺` -> `brew`, `🙏` -> `tellme`, `⚡` -> `tellme`, `🐙` -> `git`, `🐘` -> `postgresql`, and `📦` -> `npm`.
+
+### Changed
+- **Contributing Guidelines**: Updated `CONTRIBUTING.md` to document the dynamic Homebrew fallback behavior and project customization rules (`AGENT.md`).
+
 ## [1.3.0] - 2026-08-24
+
 
 ### Added
 - **Command Alias & Shell Autocorrect**: Added Zsh (`command_not_found_handler`) and Bash (`command_not_found_handle`) shell hook configurations to automatically run `tellme` and show install hints when attempting to run missing registered commands.

@@ -71,6 +71,19 @@ All supported packages and tools are registered in the in-memory lookup map defi
 
 ---
 
+## Dynamic Homebrew Fallback Detector
+If a tool is not explicitly registered in `registry_data.go`, `tellme` uses a dynamic fallback mechanism that scans local Homebrew directories (`Cellar` and `Caskroom` on macOS and Linux/Unix paths) at runtime to resolve the binary and its version. 
+- *Note:* Explicitly registering tools in `registry_data.go` is still highly preferred so they have tailored descriptions, authors, and example commands!
+
+---
+
+## Workspace Agent Customizations
+For developer agents and LLMs contributing to this workspace:
+- Coding tenets and rules are maintained in [`AGENT.md`](AGENT.md).
+- Automated runbooks and cheatsheets for developer workflows are stored under [`.agents/skills/`](.agents/skills/).
+
+---
+
 ## Pull Request Process
 
 1. **Branch Naming:** Create a clean feature branch from `main`:
@@ -81,3 +94,4 @@ All supported packages and tools are registered in the in-memory lookup map defi
 3. **Tests:** Ensure all unit tests pass before raising a PR.
 4. **Target:** Raise your Pull Request targeting the `main` branch.
 5. **CI Enforcement:** Every PR triggers a GitHub Actions pipeline (`pr-checks.yml`) that compiles the app and runs the test suite. If any check fails, the PR will be blocked from merging.
+

@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var version = "v1.3.0"
+var version = "v1.4.0"
 
 func main() {
 	// Parse command line arguments (excluding the program name itself)
@@ -197,6 +197,15 @@ func runDetectionQuery(rawQuery string) {
 				}
 			}
 		}()
+	}
+
+	// Pre-process targets to resolve any unregistered Homebrew packages sequentially (thread-safe)
+	for _, t := range targets {
+		if _, supported := ToolRegistry[t]; !supported {
+			if fallbackConfig, found := detectUnregisteredBrewTool(t); found {
+				ToolRegistry[t] = fallbackConfig
+			}
+		}
 	}
 
 	for idx, target := range targets {

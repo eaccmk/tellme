@@ -575,12 +575,45 @@ func init() {
 		Example:     "`sourcery --sources ./Sources`",
 	}
 
+	ToolRegistry["tellme"] = ToolConfig{
+		Names:       []string{"tellme"},
+		VersionArgs: []string{"-version"},
+		Author:      "eaccmk",
+		Description: "Blazing fast local offline CLI developer environment inspector",
+		Example:     "`tellme do I have python?`",
+	}
+
+	ToolRegistry["brew"] = ToolConfig{
+		Names:       []string{"brew"},
+		VersionArgs: []string{"--version"},
+		Author:      "Homebrew",
+		Description: "The Missing Package Manager for macOS (or Linux)",
+		Example:     "`brew update` or `brew install tellme`",
+	}
+
+	ToolRegistry["claude"] = ToolConfig{
+		Names:       []string{"Claude", "claude"},
+		VersionArgs: []string{"--version"},
+		CommonPaths: []string{
+			"/Applications/Claude.app/Contents/MacOS/Claude",
+		},
+		Author:      "Anthropic",
+		Description: "AI assistant desktop client",
+		Example:     "`open -a Claude`",
+	}
+
 	// Emoji aliases for common tools
 	ToolRegistry["🐍"] = ToolRegistry["python"]
-	ToolRegistry["🦀"] = ToolRegistry["rust"]
+	ToolRegistry["🦀"] = ToolRegistry["claude"]
 	ToolRegistry["☕"] = ToolRegistry["java"]
 	ToolRegistry["🐳"] = ToolRegistry["docker"]
 	ToolRegistry["🐹"] = ToolRegistry["go"]
 	ToolRegistry["🦫"] = ToolRegistry["go"]
 	ToolRegistry["💎"] = ToolRegistry["ruby"]
+	ToolRegistry["🍺"] = ToolRegistry["brew"]
+	ToolRegistry["🙏"] = ToolRegistry["tellme"]
+	ToolRegistry["⚡"] = ToolRegistry["tellme"]
+	ToolRegistry["🐙"] = ToolRegistry["git"]
+	ToolRegistry["🐘"] = ToolRegistry["postgresql"]
+	ToolRegistry["📦"] = ToolRegistry["npm"]
 }
