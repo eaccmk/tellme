@@ -77,10 +77,20 @@ func runDetectionQuery(rawQuery string) {
 		return
 	}
 
-	targets, _ := ParseQuery(rawQuery)
+	targets, _, stackName := ParseQuery(rawQuery)
+	if stackName == "unknown" {
+		printStackHelp()
+		return
+	}
+
 	if len(targets) == 0 {
 		printGreeting()
 		return
+	}
+
+	if stackName != "" {
+		profile := StackRegistry[stackName]
+		fmt.Printf("\n🔍 Checking %s (%s)...\n", profile.Name, strings.Join(profile.Tools, ", "))
 	}
 
 	type ToolResult struct {
@@ -256,6 +266,19 @@ func runDetectionQuery(rawQuery string) {
 			}
 		}
 	}
+}
+
+func printStackHelp() {
+	fmt.Println("\nI didn't recognize that stack profile.")
+	fmt.Println("\nAvailable Stacks:")
+	fmt.Println("--------------------------------------------------")
+	keys := []string{"web", "mobile", "backend", "db", "devops", "frontend"}
+	for _, k := range keys {
+		stack := StackRegistry[k]
+		fmt.Printf("• %-10s : %s\n", k, stack.Description)
+		fmt.Printf("             Tools: %s\n\n", strings.Join(stack.Tools, ", "))
+	}
+	fmt.Println("Try running: tellme web stack")
 }
 
 func printGreeting() {

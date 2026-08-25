@@ -6,9 +6,27 @@ import (
 
 // ParseQuery takes a conversational input string and attempts to extract
 // a slice of target tool names (nouns) that the user is asking about,
-// and returns whether there is a temporal query intent (e.g. "when was X installed").
+// returns whether there is a temporal query intent (e.g. "when was X installed"),
+// and returns the name of a detected stack profile if it's a stack query.
 // It handles conjunctions like "and" or "or", and comma delimiters.
-func ParseQuery(query string) ([]string, bool) {
+func ParseQuery(query string) ([]string, bool, string) {
+	// Check if this is a stack query
+	hasStackWord := false
+	for _, word := range strings.Fields(query) {
+		if isStackWord(word) {
+			hasStackWord = true
+			break
+		}
+	}
+
+	if hasStackWord {
+		stackName := detectStackInQuery(query)
+		if stackName != "" {
+			return StackRegistry[stackName].Tools, false, stackName
+		}
+		return nil, false, "unknown"
+	}
+
 	// 1. Normalize the query: convert to lowercase, replace commas with " and ", and split by whitespace
 	query = strings.ToLower(query)
 
@@ -121,7 +139,7 @@ func ParseQuery(query string) ([]string, bool) {
 		}
 	}
 
-	return results, isTemporal
+	return results, isTemporal, ""
 }
 
 // Helper to split a string by "and" or "or" word tokens
