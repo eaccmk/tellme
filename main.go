@@ -10,9 +10,24 @@ import (
 	"time"
 )
 
+var version = "v1.2.0"
+
 func main() {
 	// Parse command line arguments (excluding the program name itself)
 	args := os.Args[1:]
+
+	// Check for help/version flags first
+	if len(args) == 1 {
+		arg := strings.ToLower(args[0])
+		if arg == "-h" || arg == "--help" || arg == "-help" || arg == "help" {
+			printHelp()
+			return
+		}
+		if arg == "-v" || arg == "--version" || arg == "-version" || arg == "version" {
+			fmt.Printf("tellme version %s\n", version)
+			return
+		}
+	}
 
 	// 1. Interactive REPL Mode (if zero arguments)
 	if len(args) == 0 {
@@ -279,6 +294,22 @@ func printStackHelp() {
 		fmt.Printf("             Tools: %s\n\n", strings.Join(stack.Tools, ", "))
 	}
 	fmt.Println("Try running: tellme web stack")
+}
+
+func printHelp() {
+	fmt.Println("tellme ⚡️ - offline developer tool inspector")
+	fmt.Println("\nUsage:")
+	fmt.Println("  tellme <query>             Inspect local tools (e.g. 'tellme python')")
+	fmt.Println("  tellme <stack> stack       Inspect a stack profile (e.g. 'tellme web stack')")
+	fmt.Println("  tellme init                Generate shell initialization script")
+	fmt.Println("  tellme [help | -h]         Show this help information")
+	fmt.Println("  tellme [version | -v]      Show version information")
+	fmt.Println("\nAvailable Stacks:")
+	keys := []string{"web", "mobile", "backend", "db", "devops", "frontend"}
+	for _, k := range keys {
+		stack := StackRegistry[k]
+		fmt.Printf("  • %-10s : %s\n", k, stack.Description)
+	}
 }
 
 func printGreeting() {
