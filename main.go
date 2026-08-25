@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var version = "v1.4.0"
+var version = "v1.5.0"
 
 func main() {
 	// Parse command line arguments (excluding the program name itself)

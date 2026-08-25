@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-08-24
+
+### Added
+- **Library Package Support**: Homebrew fallback now checks version folders directly to detect libraries without binary executables (such as `sdl3` or `mpdecimal`).
+
+### Fixed
+- **Duplicate Listings**: Deduplicated system binary scan paths to prevent duplicate cards.
+- **Emoji NPM Alias Timeouts**: Configured canonical package name mapping to prevent timeouts when checking npm packages using emoji aliases (such as `📦`).
+
 ## [1.4.0] - 2026-08-24
 
 ### Added
