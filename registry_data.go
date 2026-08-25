@@ -213,7 +213,12 @@ func init() {
 	ToolRegistry["awscli"] = ToolConfig{
 		Names:       []string{"aws"},
 		VersionArgs: []string{"--version"},
+		Author:      "Amazon Web Services",
+		Description: "Unified tool to manage AWS services",
+		Example:     "`aws s3 ls` or `aws configure`",
 	}
+	ToolRegistry["aws"] = ToolRegistry["awscli"] // Alias mapping
+
 
 	ToolRegistry["kubernetes-cli"] = ToolConfig{
 		Names:       []string{"kubectl"},

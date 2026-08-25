@@ -48,11 +48,11 @@ go test -v ./...
 
 ## How to Add a New Tool or Library
 
-All supported packages and tools are registered in the in-memory lookup map defined in [`registry_data.go`](file:///Users/demo/code/tellme/registry_data.go).
+All supported packages and tools are registered in the in-memory lookup map defined in [`registry_data.go`](registry_data.go).
 
 ### Step-by-Step Instructions:
 
-1. Open [`registry_data.go`](file:///Users/demo/code/tellme/registry_data.go) and locate the `init()` function.
+1. Open [`registry_data.go`](registry_data.go) and locate the `init()` function.
 2. Decide whether the new tool is a standard system binary or a library (such as an NPM package):
    - **For Standard System Tools:** Add the package name to the `standardTools` slice. This automatically creates a default config checking `tool_name --version` in PATH.
    - **For Global NPM Packages:** Add the package name to the `npmPackages` slice. This registers the package under the NPM package manager mapping.
