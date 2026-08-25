@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0] - 2026-08-24
 
 ### Added
+- **Command Alias & Shell Autocorrect**: Added Zsh (`command_not_found_handler`) and Bash (`command_not_found_handle`) shell hook configurations to automatically run `tellme` and show install hints when attempting to run missing registered commands.
+
+### Changed
+- **Standardized Caveats Message**: Updated the Homebrew caveats in `.goreleaser.yaml` and installation tips in `README.md` to guide shell profile configurations using clean shell append commands (`>> ~/.zshrc`).
+
+### Added
 - **Help & Version Flags**: Standard support for help and version flags (both short and long options: `-v`, `--version`, `-version`, `-h`, `--help`, `-help`, `version`, `help`).
 - **Dynamic Build Version Injection**: Configured GoReleaser `ldflags` to inject build versions directly into the binary during compilation.
 

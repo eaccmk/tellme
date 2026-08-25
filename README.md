@@ -68,11 +68,11 @@ brew tap eaccmk/tellme
 brew install tellme
 ```
 
-> [!TIP]
-> **Zsh Globbing Notice:** Zsh interprets question marks (`?`) as globbing wildcards. To write queries like `tellme do I have python?` without quotes, add the following to your `~/.zshrc`:
+> **Zsh Globbing Notice:** Zsh interprets question marks (`?`) as globbing wildcards. To write queries like `tellme do I have python?` without quotes, configure your shell profile:
 > ```bash
-> eval "$(tellme init)"
+> echo 'eval "$(tellme init)"' >> ~/.zshrc
 > ```
+
 
 ---
 

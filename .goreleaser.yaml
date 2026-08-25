@@ -35,6 +35,7 @@ brews:
     install: |
       bin.install "tellme"
     caveats: |
-      To prevent shell wildcard/globbing errors (e.g. when typing question marks like 'tellme do I have python?'), add the following to your shell profile (~/.zshrc for Zsh):
+      To prevent shell wildcard/globbing errors (e.g. when typing question marks like 'tellme do I have python?'), configure your shell profile:
 
-        eval "$(tellme init)"
+        echo 'eval "$(tellme init)"' >> ~/.zshrc
+

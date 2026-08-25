@@ -41,6 +41,12 @@ func main() {
 		return
 	}
 
+	// 2b. Command-not-found handler interceptor
+	if len(args) == 2 && strings.ToLower(args[0]) == "command-not-found" {
+		runCommandNotFound(args[1])
+		return
+	}
+
 	// 3. Greeting check
 	if len(args) == 1 {
 		cmd := strings.ToLower(args[0])
@@ -59,8 +65,52 @@ func runShellInit() {
 	shell := os.Getenv("SHELL")
 	if strings.Contains(shell, "zsh") {
 		fmt.Println("alias tellme='noglob tellme'")
+		fmt.Println("command_not_found_handler() {")
+		fmt.Println("    tellme command-not-found \"$1\"")
+		fmt.Println("    return $?")
+		fmt.Println("}")
+	} else if strings.Contains(shell, "bash") {
+		fmt.Println("command_not_found_handle() {")
+		fmt.Println("    tellme command-not-found \"$1\"")
+		fmt.Println("    return $?")
+		fmt.Println("}")
 	}
 }
+
+func runCommandNotFound(cmd string) {
+	lower := strings.ToLower(cmd)
+	_, inRegistry := ToolRegistry[lower]
+	_, inStacks := StackRegistry[lower]
+	if inRegistry || inStacks {
+		runDetectionQuery(cmd)
+		os.Exit(0)
+	}
+
+	// Try finding fuzzy matches in the registry and stacks
+	var suggestions []string
+	for s := range StackRegistry {
+		if levenshteinDistance(lower, s) <= 2 {
+			suggestions = append(suggestions, s+" stack")
+		}
+	}
+	if len(lower) >= 3 {
+		for t := range ToolRegistry {
+			if levenshteinDistance(lower, t) <= 2 {
+				suggestions = append(suggestions, t)
+			}
+		}
+	}
+
+	if len(suggestions) > 0 {
+		fmt.Printf("❌ Command '%s' not found.\n", cmd)
+		fmt.Printf("💡 Did you mean: %s? (via tellme registry)\n", strings.Join(suggestions, ", "))
+	} else {
+		fmt.Printf("❌ Command '%s' not found.\n", cmd)
+		fmt.Println("🤝 Expand tellme: https://github.com/eaccmk/tellme/blob/main/CONTRIBUTING.md")
+	}
+	os.Exit(127)
+}
+
 
 func isTTY() bool {
 	fi, err := os.Stdout.Stat()
