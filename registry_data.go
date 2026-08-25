@@ -122,6 +122,7 @@ func init() {
 
 	for _, pkg := range npmPackages {
 		ToolRegistry[pkg] = ToolConfig{
+			Names:          []string{pkg},
 			PackageManager: "npm",
 			Author:         "Unknown Publisher",
 			Description:    "NPM library package",

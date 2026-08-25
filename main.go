@@ -202,7 +202,7 @@ func runDetectionQuery(rawQuery string) {
 	// Pre-process targets to resolve any unregistered Homebrew packages sequentially (thread-safe)
 	for _, t := range targets {
 		if _, supported := ToolRegistry[t]; !supported {
-			if fallbackConfig, found := detectUnregisteredBrewTool(t); found {
+			if fallbackConfig, _, found := detectUnregisteredBrewTool(t); found {
 				ToolRegistry[t] = fallbackConfig
 			}
 		}

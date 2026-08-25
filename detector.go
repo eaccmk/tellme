@@ -35,9 +35,11 @@ func DetectTools(toolName string) ([]Installation, error) {
 	lowerName := strings.ToLower(toolName)
 	config, ok := ToolRegistry[lowerName]
 	if !ok {
-		if fallbackConfig, found := detectUnregisteredBrewTool(lowerName); found {
+		if fallbackConfig, installations, found := detectUnregisteredBrewTool(lowerName); found {
 			ToolRegistry[lowerName] = fallbackConfig
 			config = fallbackConfig
+			_ = SaveCache(lowerName, installations)
+			return installations, nil
 		} else {
 			return nil, fmt.Errorf("unsupported tool: %s", toolName)
 		}
@@ -52,7 +54,9 @@ func DetectTools(toolName string) ([]Installation, error) {
 	var err error
 
 	if config.PackageManager == "npm" {
-		results, err = detectNPMPackage(toolName)
+		results, err = detectNPMPackage(toolName, config)
+	} else if config.PackageManager == "brew_fallback" {
+		_, results, _ = detectUnregisteredBrewTool(toolName)
 	} else {
 		results, err = detectSystemTool(toolName, config)
 	}
@@ -105,6 +109,7 @@ func detectSystemTool(toolName string, config ToolConfig) ([]Installation, error
 	}
 
 	var results []Installation
+	seenPaths := make(map[string]bool)
 
 	// 3. Query versions for candidates with a timeout
 	for path := range candidates {
@@ -113,6 +118,11 @@ func detectSystemTool(toolName string, config ToolConfig) ([]Installation, error
 		if err != nil {
 			realPath = path
 		}
+
+		if seenPaths[realPath] {
+			continue
+		}
+		seenPaths[realPath] = true
 
 		version, err := getVersionWithTimeout(realPath, config.VersionArgs)
 		if err != nil {
@@ -204,14 +214,19 @@ func isPermissionDenied(err error) bool {
 }
 
 // detectNPMPackage scans standard global node_modules and falls back to running `npm ls -g` with 500ms timeout
-func detectNPMPackage(packageName string) ([]Installation, error) {
+func detectNPMPackage(packageName string, config ToolConfig) ([]Installation, error) {
+	name := packageName
+	if len(config.Names) > 0 {
+		name = config.Names[0]
+	}
+
 	homeDir := os.Getenv("HOME")
 	searchPaths := []string{
-		"/usr/local/lib/node_modules/" + packageName + "/package.json",
-		"/opt/homebrew/lib/node_modules/" + packageName + "/package.json",
-		homeDir + "/.nvm/versions/node/*/lib/node_modules/" + packageName + "/package.json",
-		homeDir + "/.npm-global/lib/node_modules/" + packageName + "/package.json",
-		homeDir + "/.config/yarn/global/node_modules/" + packageName + "/package.json",
+		"/usr/local/lib/node_modules/" + name + "/package.json",
+		"/opt/homebrew/lib/node_modules/" + name + "/package.json",
+		homeDir + "/.nvm/versions/node/*/lib/node_modules/" + name + "/package.json",
+		homeDir + "/.npm-global/lib/node_modules/" + name + "/package.json",
+		homeDir + "/.config/yarn/global/node_modules/" + name + "/package.json",
 	}
 
 	var results []Installation
@@ -247,13 +262,13 @@ func detectNPMPackage(packageName string) ([]Installation, error) {
 
 	// Fallback to running npm CLI query
 	if len(results) == 0 {
-		version, err := getNPMPackageVersionViaCLI(packageName)
+		version, err := getNPMPackageVersionViaCLI(name)
 		if err != nil {
 			if isPermissionDenied(err) {
 				return nil, fmt.Errorf("Sorry, I never access things that need elevated access such as sudo or admin. (e.g., executing npm ls requiring elevated rights)")
 			}
 			if err == context.DeadlineExceeded {
-				return nil, fmt.Errorf("timeout: npm version check took too long for package %s", packageName)
+				return nil, fmt.Errorf("timeout: npm version check took too long for package %s", name)
 			}
 			return nil, nil
 		}
