@@ -5,13 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.0] - 2026-08-24
+## [1.3.0] - 2026-08-24
 
 ### Added
 - **Command Alias & Shell Autocorrect**: Added Zsh (`command_not_found_handler`) and Bash (`command_not_found_handle`) shell hook configurations to automatically run `tellme` and show install hints when attempting to run missing registered commands.
 
 ### Changed
 - **Standardized Caveats Message**: Updated the Homebrew caveats in `.goreleaser.yaml` and installation tips in `README.md` to guide shell profile configurations using clean shell append commands (`>> ~/.zshrc`).
+
+## [1.2.0] - 2026-08-24
 
 ### Added
 - **Help & Version Flags**: Standard support for help and version flags (both short and long options: `-v`, `--version`, `-version`, `-h`, `--help`, `-help`, `version`, `help`).

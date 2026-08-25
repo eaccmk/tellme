@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var version = "v1.2.0"
+var version = "v1.3.0"
 
 func main() {
 	// Parse command line arguments (excluding the program name itself)
@@ -110,7 +110,6 @@ func runCommandNotFound(cmd string) {
 	}
 	os.Exit(127)
 }
-
 
 func isTTY() bool {
 	fi, err := os.Stdout.Stat()
